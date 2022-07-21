@@ -1,55 +1,55 @@
+import { PrismaClient } from "@prisma/client"
 import { ApolloServer, gql } from "apollo-server"
 
-let tempMovies = [
-    {
-        title: "First Movie",
-        year: 1997
-    },
-    {
-        title: "Second Movie",
-        year: 2021
-    },
-    {
-        title: "Third Movie",
-        year: 2018
-    }
-]
+const client = new PrismaClient();
+
 
 const typeDefs = gql`
 
    type Movie {
-    id: Int
-    title: String
-    year: Int
+    id: Int!
+    title: String!
+    year: Int!
+    genre: String
+    createdAt: String!
+    updatedAt: String!
    } 
 
     type Query {
         movies : [Movie]
-        movie: Movie
+        movie(id: Int!): Movie
     }
 
     type Mutation {
-        createMovie(title: String!): Boolean
-        deleteMovie(title: String!): Boolean
+        createMovie(title: String!, year: Int!, genre: String): Movie
+        deleteMovie(id: Int!): Movie
+        updateMovie(id: Int!, year: Int!): Movie
     }
 `
 
 const resolvers = {
     Query: {
-        movies: () => tempMovies,
-        movie: () => ({ title: "Hello", year: 2021 })
+        movies: () => client.movie.findMany(),
+        movie: (_, { id }) => client.movie.findUnique({
+            where: {
+                id
+            }
+        })
     },
     Mutation: {
-        createMovie: (_, { title }) => {
-            const movie = { title: title, year: 2022 }
-            tempMovies.push(movie)
-            return true
+        createMovie: (_, { title, year, genre }) => {
+            return client.movie.create({
+                data: {
+                    title,
+                    genre,
+                    year
+                }
+            })
         },
-        deleteMovie: (_, { title }) => {
-            const originalLength = tempMovies.length;
-            tempMovies = tempMovies.filter((movie) => movie.title !== title)
-            return tempMovies.length !== originalLength ? true : false;
-        }
+        deleteMovie: (_, { id }) => {
+            return client.movie.delete({ where: { id } })
+        },
+        updateMovie: (_, { id, year }) => client.movie.update({ where: { id }, data: { year } })
     }
 }
 
