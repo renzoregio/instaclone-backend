@@ -1,9 +1,10 @@
 import { client } from "../../client"
 import bcrypt from "bcrypt"
+import { protectedResolver } from "../users.utils"
 
 export default {
     Mutation: {
-        editProfile: async (_, { firstName, lastName, userName, email, password: newPassword }, context) => {
+        editProfile: protectedResolver(async (_, { firstName, lastName, userName, email, password: newPassword }, context) => {
             try {
                 const { loggedInUser } = context
 
@@ -31,6 +32,6 @@ export default {
             } catch (err) {
                 return { ok: false, error: err.message }
             }
-        }
+        })
     }
 }
