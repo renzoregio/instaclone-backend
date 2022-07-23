@@ -1,16 +1,11 @@
 import { client } from "../../client"
 import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
 
 export default {
     Mutation: {
-        editProfile: async (_, { firstName, lastName, userName, email, password: newPassword, token }) => {
+        editProfile: async (_, { firstName, lastName, userName, email, password: newPassword }, context) => {
             try {
-                const { id } = jwt.verify(token, process.env.SECRET_KEY)
-
-                if (!id) {
-                    throw new Error("Could not update profile.")
-                }
+                const { loggedInUser } = context
 
                 let hashedPassword = null;
 
@@ -20,7 +15,7 @@ export default {
 
                 const updatedUser = await client.user.update({
                     where: {
-                        id
+                        id: loggedInUser.id
                     },
                     data: {
                         firstName, lastName, userName, email,
