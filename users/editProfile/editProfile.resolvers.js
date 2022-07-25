@@ -4,7 +4,7 @@ import { protectedResolver } from "../users.utils"
 
 export default {
     Mutation: {
-        editProfile: protectedResolver(async (_, { firstName, lastName, userName, email, password: newPassword }, context) => {
+        editProfile: protectedResolver(async (_, { firstName, lastName, userName, email, password: newPassword, bio }, context) => {
             try {
                 const { loggedInUser } = context
 
@@ -19,7 +19,7 @@ export default {
                         id: loggedInUser.id
                     },
                     data: {
-                        firstName, lastName, userName, email,
+                        firstName, lastName, userName, email, bio,
                         ...(hashedPassword && { password: hashedPassword })
                     }
                 })
