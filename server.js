@@ -14,16 +14,16 @@ const startServer = async () => {
                 loggedInUser: await getUser(req.headers.authorization),
             };
         },
-        csrfPrevention: true,
     });
 
     await server.start()
     const app = express()
     app.use(graphqlUploadExpress());
     server.applyMiddleware({ app });
-
-    await new Promise(r => app.listen({ port: 4000 }, r));
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+    const PORT = process.env.PORT;
+    app.listen({ port: PORT }, () => {
+        console.log(`🚀 Server ready at http://localhost:${PORT}`)
+    })
 }
 
 startServer()
