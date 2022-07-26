@@ -18,6 +18,8 @@ model User {
   email     String   @unique
   bio       String?
   avatar    String?
+  following User[]   @relation("FollowRelation")
+  followers User[]   @relation("FollowRelation")
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
