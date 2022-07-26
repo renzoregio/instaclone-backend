@@ -19,7 +19,7 @@ export default {
 
                 const hashedPassword = await bcrypt.hash(password, 10)
 
-                client.user.create({
+                await client.user.create({
                     data: {
                         firstName, lastName, userName, email, password: hashedPassword
                     }
