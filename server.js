@@ -6,7 +6,7 @@ import { getUser } from "./users/users.utils";
 import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress.js";
 
 const startServer = async () => {
-    const server = new ApolloServer({
+    const apollo = new ApolloServer({
         resolvers,
         typeDefs,
         context: async ({ req }) => {
@@ -16,10 +16,11 @@ const startServer = async () => {
         },
     });
 
-    await server.start()
+    await apollo.start()
     const app = express()
+    app.use("/static", express.static("uploads"))
     app.use(graphqlUploadExpress());
-    server.applyMiddleware({ app });
+    apollo.applyMiddleware({ app });
     const PORT = process.env.PORT;
     app.listen({ port: PORT }, () => {
         console.log(`🚀 Server ready at http://localhost:${PORT}`)
