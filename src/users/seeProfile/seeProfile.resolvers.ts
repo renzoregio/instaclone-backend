@@ -1,6 +1,7 @@
 import { client } from "../../client"
+import { Resolvers } from "../../types"
 
-export default {
+const resolver: Resolvers = {
     Query: {
         seeProfile: async (_, { userName }) => {
             try {
