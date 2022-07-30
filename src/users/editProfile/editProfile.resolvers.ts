@@ -1,16 +1,17 @@
 import * as bcrypt from "bcrypt"
 import { protectedResolver } from "../users.utils"
-import { createWriteStream, read } from "fs"
+import { createWriteStream } from "fs"
 import { Resolvers } from "../../types"
+
 
 const resolvers: Resolvers = {
     Mutation: {
-        editProfile: protectedResolver(async (_, { firstName, lastName, userName, email, password: newPassword, bio, avatar }, { loggedInUser, client}) => {
+        editProfile: protectedResolver(async (_, { firstName, lastName, userName, email, password: newPassword, bio, avatar }, {loggedInUser, client}) => {
             try {
                 let avatarUrl = null
 
                 if (avatar) {
-                    const { filename, createReadStream } = await avatar;
+                    const { filename, createReadStream } = avatar;
                     const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`
                     const readStream = createReadStream();
                     const writeSteam = createWriteStream(process.cwd() + "/uploads/" + newFilename)
