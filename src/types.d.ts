@@ -9,7 +9,8 @@ interface UsersArgs {
     password?: string
     bio?: string,
     avatar?: FileUpload,
-    page?: number
+    page?: number,
+    lastId?: number
 }
 export interface Context {
     loggedInUser?: User,
@@ -20,6 +21,7 @@ interface ResolverResults {
     ok: boolean,
     error?: string,
     token?: string,
+    following?: User[],
     followers?: User[],
     totalPages?: number
 }
