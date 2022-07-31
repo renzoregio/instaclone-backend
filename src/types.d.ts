@@ -27,9 +27,10 @@ interface ResolverResults {
 }
 
 export type ResolverFn = (root: any, args: UsersArgs, context: Context, info: any) => Promise<ResolverResults> | ResolverResults
+export type UserResolverFn = (root: any, args: UsersArgs, context: Context, info: any) => any
 
 export type Resolvers = {
     [key: string]: {
-        [key: string]: ResolverFn
+        [key: string]: ResolverFn | UserResolverFn
     }
 }

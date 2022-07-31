@@ -14,6 +14,8 @@ export default gql`
         following: [User]
         createdAt: String!
         updatedAt: String!
+        totalFollowing: Int!
+        totalFollowers: Int!
     }
 
 `
