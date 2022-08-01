@@ -7,6 +7,18 @@ const resolvers: Resolvers = {
         },
         totalFollowers: ({ id }, _, { client }) => {
             return client.user.count({ where: { following: { some: { id }}}})
+        },
+        isMyProfile: ({ id }, _, { loggedInUser }) => {
+            return loggedInUser && id === loggedInUser.id;
+        },
+        isFollowing: async ({ id }, _, { loggedInUser, client }) => {
+            if(!loggedInUser && loggedInUser.id === id){
+                return false
+            }
+
+            const isExists = await client.user.findUnique({where: { id: loggedInUser.id }}).following({ where: { id }})
+            
+            return isExists.length ? true : false;
         }
     }
 }

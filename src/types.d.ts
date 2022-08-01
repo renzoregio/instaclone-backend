@@ -12,6 +12,12 @@ interface UsersArgs {
     page?: number,
     lastId?: number
 }
+
+interface UsersRootArg {
+    id: number,
+    userName: string,
+    email: string
+}
 export interface Context {
     loggedInUser?: User,
     client: PrismaClient
@@ -26,8 +32,10 @@ interface ResolverResults {
     totalPages?: number
 }
 
-export type ResolverFn = (root: any, args: UsersArgs, context: Context, info: any) => Promise<ResolverResults> | ResolverResults
-export type UserResolverFn = (root: any, args: UsersArgs, context: Context, info: any) => any
+export type ResolverFn = (root: UsersRootArg, args: UsersArgs, context: Context, info: any) => Promise<ResolverResults> | ResolverResults
+export type UserResolverFn = (root: UsersRootArg, args: UsersArgs, context: Context, info: any) => any
+
+
 
 export type Resolvers = {
     [key: string]: {
