@@ -12,7 +12,9 @@ interface Args {
     page?: number,
     lastId?: number,
     file?: string,
-    caption?: string
+    caption?: string,
+    id?: number,
+    hashtag?: string
 }
 
 

@@ -12,7 +12,21 @@ const resolvers: Resolvers = {
             const tags = await client.photo.findUnique({ where: { id }, select: { hashtags: true } });
             return tags.hashtags
         }
-    }
+    },
+
+    Hashtag: {
+        photos: async({ id }, { lastId }, { client } : Context) => {
+            return await client.photo.findMany({ 
+                where: { hashtags: { some: { id }}},
+                skip: lastId ? 1 : 0,
+                take: 9,
+                ...(lastId && { cursor: { id: lastId }})
+            })
+        },
+        totalPhotos: async({ id }, _, { client } : Context) => {
+            return await client.photo.count({ where: { hashtags: { some: { id }}}})
+        }
+    } 
 }
 
 export default resolvers;
