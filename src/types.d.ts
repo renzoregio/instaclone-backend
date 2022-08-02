@@ -1,7 +1,7 @@
 import { User, PrismaClient } from "@prisma/client"
-import { FileUpload } from "graphql-upload"
+import { FileUpload, Upload } from "graphql-upload"
 
-interface UsersArgs {
+interface Args {
     firstName?: string,
     lastName?: string,
     userName?: string,
@@ -10,8 +10,11 @@ interface UsersArgs {
     bio?: string,
     avatar?: FileUpload,
     page?: number,
-    lastId?: number
+    lastId?: number,
+    file?: string,
+    caption?: string
 }
+
 
 interface UsersRootArg {
     id: number,
@@ -32,8 +35,8 @@ interface ResolverResults {
     totalPages?: number
 }
 
-export type ResolverFn = (root: UsersRootArg, args: UsersArgs, context: Context, info: any) => Promise<ResolverResults> | ResolverResults
-export type UserResolverFn = (root: UsersRootArg, args: UsersArgs, context: Context, info: any) => any
+export type ResolverFn = (root: UsersRootArg, args: Args, context: Context, info: any) => Promise<ResolverResults> | ResolverResults
+export type UserResolverFn = (root: UsersRootArg, args: Args, context: Context, info: any) => any
 
 
 
