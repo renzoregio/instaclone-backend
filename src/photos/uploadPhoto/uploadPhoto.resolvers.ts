@@ -20,7 +20,7 @@ import { protectedResolver } from "../../users/users.utils";
                 data: {
                     user: { connect: { id: loggedInUser.id }},
                     file,
-                    caption: caption,
+                    caption,
                     ...(hashtagArr.length && { hashtags: { connectOrCreate: hashtagArr } } )
                 }
             })            
