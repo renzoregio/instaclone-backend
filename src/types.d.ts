@@ -19,8 +19,10 @@ interface Args {
 interface UsersRootArg {
     id: number,
     userName: string,
-    email: string
+    email: string,
+    userId: number
 }
+
 export interface Context {
     loggedInUser?: User,
     client: PrismaClient
@@ -35,7 +37,7 @@ interface ResolverResults {
     totalPages?: number
 }
 
-export type ResolverFn = (root: UsersRootArg, args: Args, context: Context, info: any) => Promise<ResolverResults> | ResolverResults
+export type ResolverFn = (root: UsersRootArg, args: Args, context: Context, info: any) => Promise<any> | ResolverResults
 export type UserResolverFn = (root: UsersRootArg, args: Args, context: Context, info: any) => any
 
 

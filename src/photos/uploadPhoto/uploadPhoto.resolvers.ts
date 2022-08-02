@@ -16,16 +16,14 @@ import { protectedResolver } from "../../users/users.utils";
                 })
             }
             
-            await client.photo.create({
+            return await client.photo.create({
                 data: {
                     user: { connect: { id: loggedInUser.id }},
                     file,
                     caption: caption,
                     ...(hashtagArr.length && { hashtags: { connectOrCreate: hashtagArr } } )
                 }
-            })
-
-            return null
+            })            
         })
     }
  }
