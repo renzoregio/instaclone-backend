@@ -1,8 +1,11 @@
-import { Resolvers } from "../../types"
+import { User } from "@prisma/client";
+import { Context } from "../../types/common/context";
+import { Resolvers } from "../../types/common/resolvers";
+import { SeeProfileArgs } from "../../types/users/resolverTypes";
 
 const resolvers: Resolvers = {
     Query: {
-        seeProfile: async (_, { userName }, { client }) => {
+        seeProfile: async (_, { userName } : SeeProfileArgs, { client } : Context) : Promise<User> => {
             try {
                 const user = await client.user.findUnique({
                     where: {

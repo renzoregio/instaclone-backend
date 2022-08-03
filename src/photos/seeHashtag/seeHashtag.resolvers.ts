@@ -1,10 +1,11 @@
 import { Hashtag } from "@prisma/client";
-import { Context, Resolvers } from "../../types";
-import { Args } from "./seeHashtag.types";
+import { Resolvers } from "../../types/common/resolvers";
+import { Context } from "../../types/common/context";
+import { SeeHashtagArgs } from "../../types/hashtags/resolverTypes";
 
 const resolvers: Resolvers = {
     Query: {
-        seeHashtag: async(_, { hashtag } : Args, { client } : Context) : Promise<Hashtag> => {
+        seeHashtag: async(_, { hashtag } : SeeHashtagArgs, { client } : Context) : Promise<Hashtag> => {
             return await client.hashtag.findUnique({ where: { hashtag }})
         }
     }

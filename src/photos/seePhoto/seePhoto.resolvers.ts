@@ -1,11 +1,12 @@
 import { Photo } from "@prisma/client";
-import { Context, Resolvers } from "../../types";
-import { Args } from "./seePhoto.types";
+import { SeePhotoArgs } from "../../types/photos/resolverTypes";
+import { Context } from "../../types/common/context";
+import { Resolvers } from "../../types/common/resolvers";
 
 
 const resolvers: Resolvers = {
     Query: {
-        seePhoto: async(_, { id } : Args, { client } : Context) => {
+        seePhoto: async(_, { id } : SeePhotoArgs, { client } : Context) : Promise<Photo> => {
             return await client.photo.findUnique({ where: { id }})
         }
     }

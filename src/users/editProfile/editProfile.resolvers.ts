@@ -1,12 +1,14 @@
 import * as bcrypt from "bcrypt"
 import { protectedResolver } from "../users.utils"
 import { createWriteStream } from "fs"
-import { Resolvers } from "../../types"
+import { Resolvers } from "../../types/common/resolvers";
+import { Context } from "../../types/common/context";
+import { EditProfileArgs, GenericResolverResults } from "../../types/users/resolverTypes";
 
 
 const resolvers: Resolvers = {
     Mutation: {
-        editProfile: protectedResolver(async (_, { firstName, lastName, userName, email, password: newPassword, bio, avatar }, {loggedInUser, client}) => {
+        editProfile: protectedResolver(async (_, { firstName, lastName, userName, email, password: newPassword, bio, avatar } : EditProfileArgs, { loggedInUser, client } : Context) : Promise<GenericResolverResults> => {
             try {
                 let avatarUrl = null
 

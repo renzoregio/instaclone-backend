@@ -1,9 +1,11 @@
 import * as bcrypt from "bcrypt"
-import { Resolvers } from "../../types"
+import { Context } from "../../types/common/context";
+import { Resolvers } from "../../types/common/resolvers";
+import { CreateAccountArgs, GenericResolverResults } from "../../types/users/resolverTypes";
 
 const resolvers: Resolvers = {
     Mutation: {
-        createAccount: async (_, { firstName, lastName, userName, email, password }, { client }) => {
+        createAccount: async (_, { firstName, lastName, userName, email, password } : CreateAccountArgs, { client } : Context) : Promise<GenericResolverResults> => {
             try {
                 const existingUser = await client.user.findFirst({
                     where: {

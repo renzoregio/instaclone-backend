@@ -1,8 +1,10 @@
-import { Resolvers } from "../../types";
+import { Context } from "../../types/common/context";
+import { Resolvers } from "../../types/common/resolvers";
+import { SeeFollowersArgs, SeeFollowersResults } from "../../types/users/resolverTypes";
 
 const resolvers: Resolvers = {
     Query: {
-        seeFollowers: async(_, { userName, page }, { client }) => {
+        seeFollowers: async(_, { userName, page } : SeeFollowersArgs, { client } : Context) : Promise<SeeFollowersResults> => {
             try {
                 const isUserExisting = await client.user.findUnique({ where: { userName }, select: { id: true }})
                 if(!isUserExisting){

@@ -1,9 +1,12 @@
-import { Resolvers } from "../../types";
+import { Photo } from "@prisma/client";
+import { UploadPhotoArgs } from "../../types/photos/resolverTypes";
 import { protectedResolver } from "../../users/users.utils";
+import { Context } from "../../types/common/context";
+import { Resolvers } from "../../types/common/resolvers";
 
  const resolvers: Resolvers = {
     Mutation: {
-        uploadPhoto: protectedResolver(async(_, { file, caption }, { loggedInUser, client}) => {
+        uploadPhoto: protectedResolver(async(_, { file, caption } : UploadPhotoArgs, { loggedInUser, client } : Context) : Promise<Photo> => {
             let temp = [];
             let hashtagArr = []
             if(caption){

@@ -1,21 +1,23 @@
-import { Hashtag, User } from "@prisma/client";
-import { Context, Resolvers } from "../types";
-import { Root } from "./uploadPhoto/uploadPhoto.types";
+import { Hashtag, Photo, User } from "@prisma/client";
+import { Resolvers } from "../types/common/resolvers";
+import { ArgsPhotos, RootPhotos } from "../types/hashtags/resolverTypes";
+import { RootHashtags, RootUser } from "../types/photos/resolverTypes";
+import { Context } from "../types/common/context";
 
 
 const resolvers: Resolvers = {
     Photo: {
-        user: async({ userId } : Root, _, { client } : Context) : Promise<User>  => {
+        user: async({ userId } : RootUser, _, { client } : Context) : Promise<User>  => {
             return await client.user.findUnique({ where: { id: userId }})
         },
-        hashtags: async({ id }: Root, _, { client } : Context) : Promise<Hashtag[]> => {
+        hashtags: async({ id }: RootHashtags, _, { client } : Context) : Promise<Hashtag[]> => {
             const tags = await client.photo.findUnique({ where: { id }, select: { hashtags: true } });
             return tags.hashtags
         }
     },
 
     Hashtag: {
-        photos: async({ id }, { lastId }, { client } : Context) => {
+        photos: async({ id } : RootPhotos, { lastId } : ArgsPhotos, { client } : Context) : Promise<Photo[]> => {
             return await client.photo.findMany({ 
                 where: { hashtags: { some: { id }}},
                 skip: lastId ? 1 : 0,
@@ -23,7 +25,7 @@ const resolvers: Resolvers = {
                 ...(lastId && { cursor: { id: lastId }})
             })
         },
-        totalPhotos: async({ id }, _, { client } : Context) => {
+        totalPhotos: async({ id } : RootPhotos, _, { client } : Context) : Promise<number>  => {
             return await client.photo.count({ where: { hashtags: { some: { id }}}})
         }
     } 

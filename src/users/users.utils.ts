@@ -1,6 +1,7 @@
 import * as jwt from "jsonwebtoken"
 import { client } from "../client";
-import { Context, ResolverFn } from "../types";
+import { Context } from "../types/common/context";
+import { Resolver } from "../types/common/resolvers";
 
 export const getUser = async (token) => {
     try {
@@ -27,7 +28,7 @@ export const getUser = async (token) => {
     }
 }
 
-export const protectedResolver = (passedResolver: ResolverFn) => (root: any, args: any, context: Context, info: any) => {
+export const protectedResolver = (passedResolver: Resolver) => (root: any, args: any, context: Context, info: any) => {
     if (!context.loggedInUser) {
         return {
             ok: false,
