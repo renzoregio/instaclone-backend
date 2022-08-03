@@ -23,3 +23,9 @@ export interface SeePhotoArgs {
     id: number
 }
 
+// searchPhotos
+
+export interface SearchPhotosArgs {
+    keyword: string,
+    lastId?: number
+}
