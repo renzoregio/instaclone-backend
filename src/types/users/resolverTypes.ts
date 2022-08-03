@@ -93,3 +93,15 @@ export interface CreateAccountArgs {
     email: string,
     password: string
 }
+
+// computed fields
+
+// photos
+
+export interface ComputedFieldsRoot {
+    id: number
+}
+
+export interface PhotosArgs {
+    lastId: number
+}
