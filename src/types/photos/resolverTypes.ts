@@ -1,3 +1,9 @@
+// utils
+
+export interface ProcessCaptionHashtagsResults {
+    where: { hashtag : string },
+    create: { hashtag : string }
+}
 
 // computed fields interfaces
 
@@ -29,3 +35,11 @@ export interface SearchPhotosArgs {
     keyword: string,
     lastId?: number
 }
+
+// editPhoto
+
+export interface EditPhotoArgs {
+    photoId: number,
+    newCaption: string
+}
+
