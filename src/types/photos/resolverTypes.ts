@@ -54,3 +54,9 @@ export interface EditPhotoArgs {
 export interface ToggleLikeArgs {
     photoId: number
 }
+
+// seePhotoLikes
+
+export interface SeePhotoLikesArgs {
+    photoId: number
+}
