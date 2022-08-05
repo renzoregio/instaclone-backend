@@ -15,6 +15,10 @@ export interface RootHashtags {
     id: number
 }
 
+export interface RootLikes {
+    id: number
+}
+
 
 // uploadPhoto interfaces 
 
@@ -43,3 +47,10 @@ export interface EditPhotoArgs {
     newCaption: string
 }
 
+
+
+// toggleLike
+
+export interface ToggleLikeArgs {
+    photoId: number
+}
