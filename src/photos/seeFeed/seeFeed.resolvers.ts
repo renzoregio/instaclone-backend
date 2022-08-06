@@ -1,11 +1,12 @@
 import { Photo } from "@prisma/client";
 import { Context } from "../../types/common/context";
 import { Resolvers } from "../../types/common/resolvers";
+import { SeeFeedArgs } from "../../types/users/resolverTypes";
 import { protectedResolver } from "../../users/users.utils";
 
 const resolvers : Resolvers = {
     Query: {
-        seeFeed: protectedResolver(async(_, { lastId }, { loggedInUser, client } : Context) : Promise<Photo[]> => {
+        seeFeed: protectedResolver(async(_, { lastId } : SeeFeedArgs, { loggedInUser, client } : Context) : Promise<Photo[]> => {
             return await client.photo.findMany({ 
                 where: { 
                     OR: [

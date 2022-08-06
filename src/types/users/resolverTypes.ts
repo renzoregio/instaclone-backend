@@ -105,3 +105,10 @@ export interface ComputedFieldsRoot {
 export interface PhotosArgs {
     lastId: number
 }
+
+// seeFeed
+
+export interface SeeFeedArgs{
+    lastId: number
+}
+
