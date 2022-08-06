@@ -21,11 +21,11 @@ model User {
   photos    Photo[]
   following User[]    @relation("FollowRelation")
   followers User[]    @relation("FollowRelation")
+  comments  Comment[]
   password  String
   likes     Like[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Comment   Comment[]
 }
 
 model Photo {
@@ -36,9 +36,9 @@ model Photo {
   caption   String?
   hashtags  Hashtag[]
   likes     Like[]
+  comments  Comment[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Comment   Comment[]
 }
 
 model Hashtag {
