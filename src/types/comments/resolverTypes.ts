@@ -9,3 +9,10 @@ export default interface RootIsMyComment {
 export interface DeleteCommentArgs {
     id: number
 }
+
+// editComment
+
+export interface EditCommentArgs {
+    id: number,
+    newPayload: string
+}
