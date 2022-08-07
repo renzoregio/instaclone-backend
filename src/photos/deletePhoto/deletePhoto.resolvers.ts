@@ -1,10 +1,12 @@
 import { Context } from "../../types/common/context";
 import { Resolvers } from "../../types/common/resolvers";
+import { DeletePhotoArgs } from "../../types/photos/resolverTypes";
+import { GenericResolverResults } from "../../types/users/resolverTypes";
 import { protectedResolver } from "../../users/users.utils";
 
  const resolvers : Resolvers = {
     Mutation: {
-        deletePhoto: protectedResolver(async(_, { id }, { client, loggedInUser } : Context) => {
+        deletePhoto: protectedResolver(async(_, { id } : DeletePhotoArgs, { client, loggedInUser } : Context) : Promise<GenericResolverResults> => {
             const photo = await client.photo.findUnique({ where: { id }, select: { userId: true }})
 
             if(!photo){
@@ -16,7 +18,7 @@ import { protectedResolver } from "../../users/users.utils";
             }
 
             await client.photo.delete({ where: { id }})
-            
+
             return { ok: true }
         })
     }

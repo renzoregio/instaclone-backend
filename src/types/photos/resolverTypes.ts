@@ -83,3 +83,9 @@ export interface SeePhotoCommentsResults {
     payload: string,
     user: User
 }
+
+// deletePhoto
+
+export interface DeletePhotoArgs {
+    id: number
+}
