@@ -1,5 +1,7 @@
 // utils
 
+import { User } from "@prisma/client"
+
 export interface ProcessCaptionHashtagsResults {
     where: { hashtag : string },
     create: { hashtag : string }
@@ -63,4 +65,17 @@ export interface ToggleLikeArgs {
 
 export interface SeePhotoLikesArgs {
     photoId: number
+}
+
+// seePhotoComments
+
+export interface SeePhotoCommentsArgs {
+    id: number,
+    lastId: number
+}
+
+export interface SeePhotoCommentsResults {
+    id: number,
+    payload: string,
+    user: User
 }
