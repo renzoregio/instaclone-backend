@@ -25,6 +25,9 @@ export interface RootComments {
     id: number
 }
 
+export interface RootIsMyPhoto {
+    userId: number
+}
 
 // uploadPhoto interfaces 
 
@@ -76,6 +79,7 @@ export interface SeePhotoCommentsArgs {
 
 export interface SeePhotoCommentsResults {
     id: number,
+    userId: number,
     payload: string,
     user: User
 }
