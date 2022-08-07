@@ -8,6 +8,7 @@ export default gql`
         file: String!
         caption: String
         likes: Int! 
+        comments: Int!
         isMyPhoto: Boolean!
         hashtags: [Hashtag]
         createdAt: String!

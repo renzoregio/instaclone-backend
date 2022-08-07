@@ -19,6 +19,10 @@ export interface RootLikes {
     id: number
 }
 
+export interface RootComments {
+    id: number
+}
+
 
 // uploadPhoto interfaces 
 
