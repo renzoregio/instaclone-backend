@@ -35,6 +35,7 @@
 ## Direct Messages
 
 - [ ] Create Room
-- [ ] Get Room
+- [ ] See Room
+- [ ] See Rooms
 - [ ] Send Message
-- [ ] Realtime Messaging
+- [ ] Realtime Messages
