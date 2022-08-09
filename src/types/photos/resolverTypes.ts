@@ -1,6 +1,7 @@
 // utils
 
 import { User } from "@prisma/client"
+import { FileUpload, Upload } from "graphql-upload"
 
 export interface ProcessCaptionHashtagsResults {
     where: { hashtag : string },
@@ -32,7 +33,7 @@ export interface RootIsMyPhoto {
 // uploadPhoto interfaces 
 
 export interface UploadPhotoArgs {
-    file: string,
+    file: FileUpload,
     caption: string
 }
 

@@ -4,7 +4,7 @@ import { createWriteStream } from "fs"
 import { Resolvers } from "../../types/common/resolvers";
 import { Context } from "../../types/common/context";
 import { EditProfileArgs, GenericResolverResults } from "../../types/users/resolverTypes";
-import { uploadPhoto } from "../../shared/shared.utils";
+import { uploadToS3 } from "../../shared/shared.utils";
 
 
 const resolvers: Resolvers = {
@@ -14,7 +14,7 @@ const resolvers: Resolvers = {
                 let avatarUrl = null
 
                 if (avatar) {
-                    avatarUrl = await uploadPhoto(avatar, loggedInUser.id)
+                    avatarUrl = await uploadToS3(avatar, loggedInUser.id, "avatars")
                     // const { filename, createReadStream } = avatar;
                     // const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`
                     // const readStream = createReadStream();

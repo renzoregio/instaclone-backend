@@ -4,6 +4,7 @@ import { protectedResolver } from "../../users/users.utils";
 import { Context } from "../../types/common/context";
 import { Resolvers } from "../../types/common/resolvers";
 import processCaptionHashtags from "../photos.utils";
+import { uploadToS3 } from "../../shared/shared.utils";
 
  const resolvers: Resolvers = {
     Mutation: {
@@ -12,11 +13,11 @@ import processCaptionHashtags from "../photos.utils";
             if(caption){
                 hashtagArr = processCaptionHashtags(caption)
             }
-            
+            const fileUrl = await uploadToS3(file, loggedInUser.id, "uploads")
             return await client.photo.create({
                 data: {
                     user: { connect: { id: loggedInUser.id }},
-                    file,
+                    file: fileUrl,
                     caption,
                     ...(hashtagArr.length && { hashtags: { connectOrCreate: hashtagArr } } )
                 }
