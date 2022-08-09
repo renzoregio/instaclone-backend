@@ -4,6 +4,7 @@ import { createWriteStream } from "fs"
 import { Resolvers } from "../../types/common/resolvers";
 import { Context } from "../../types/common/context";
 import { EditProfileArgs, GenericResolverResults } from "../../types/users/resolverTypes";
+import { uploadPhoto } from "../../shared/shared.utils";
 
 
 const resolvers: Resolvers = {
@@ -13,12 +14,13 @@ const resolvers: Resolvers = {
                 let avatarUrl = null
 
                 if (avatar) {
-                    const { filename, createReadStream } = avatar;
-                    const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`
-                    const readStream = createReadStream();
-                    const writeSteam = createWriteStream(process.cwd() + "/uploads/" + newFilename)
-                    readStream.pipe(writeSteam);
-                    avatarUrl = `http://localhost:4000/static/${newFilename}`
+                    avatarUrl = await uploadPhoto(avatar, loggedInUser.id)
+                    // const { filename, createReadStream } = avatar;
+                    // const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`
+                    // const readStream = createReadStream();
+                    // const writeSteam = createWriteStream(process.cwd() + "/uploads/" + newFilename)
+                    // readStream.pipe(writeSteam);
+                    // avatarUrl = `http://localhost:4000/static/${newFilename}`
                 }
 
                 let hashedPassword = null;
