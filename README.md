@@ -24,9 +24,17 @@
 - [x] See Feed
 - [x] See Photo Comments
 - [x] Delete Photo
+- [x] S3 Image Download
 
 ## Comments
 
 - [x] Comment on Photo
 - [x] Delete Comment
-- [ ] Edit Comment
+- [x] Edit Comment
+
+## Direct Messages
+
+- [ ] Create Room
+- [ ] Get Room
+- [ ] Send Message
+- [ ] Realtime Messaging
