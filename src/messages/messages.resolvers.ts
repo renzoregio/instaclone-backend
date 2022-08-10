@@ -18,6 +18,11 @@ const resolvers: Resolvers = {
             
             return await client.message.count({ where: { read: false, roomId: id, userId: {not: loggedInUser.id} }})
         }
+    },
+    Message: {
+        user: async({ id } : { id: number }, _, { client }: Context) : Promise<User> => {
+            return await client.message.findUnique({ where: { id }}).user()
+        }
     }
 
 }

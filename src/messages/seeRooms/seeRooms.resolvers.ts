@@ -7,7 +7,7 @@ import { protectedResolver } from "../../users/users.utils";
 const resolvers : Resolvers = {
     Query: {
         seeRooms: protectedResolver(async(_, { lastId } : SeeRoomsArgs, { client, loggedInUser } : Context) : Promise<Room[]> => {
-            return await client.room.findMany({ where: { users: { some: { id: loggedInUser.id }}}, take: 5, skip: lastId ? 0 : 1, ...(lastId && { cursor: { id: lastId }})})
+            return await client.room.findMany({ where: { users: { some: { id: loggedInUser.id }}}, take: 5, skip: lastId ? 1 : 0, ...(lastId && { cursor: { id: lastId }})})
         })
     }
 }
