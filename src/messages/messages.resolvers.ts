@@ -11,7 +11,13 @@ const resolvers: Resolvers = {
         messages: async({ id } : { id: number }, { lastId } : { lastId: number}, { client } : Context): Promise<Message[]> => {
             return await client.message.findMany({ where: { roomId: id }, take: 5, skip: lastId ? 1 : 0, ...(lastId && { cursor : { id : lastId }})})
         },
-        // unreadTotal: () => 0 inc
+        unreadTotal: async({ id } : { id: number }, _, { client, loggedInUser } : Context) : Promise<number>  => {
+            if(!loggedInUser){
+                return 0
+            }
+            
+            return await client.message.count({ where: { read: false, roomId: id, userId: {not: loggedInUser.id} }})
+        }
     }
 
 }
