@@ -11,3 +11,9 @@ export interface SendMessageArgs {
 export interface SeeRoomsArgs {
     lastId: number
 }
+
+// seeRoom
+
+export interface SeeRoomArgs {
+    roomId: number
+}
