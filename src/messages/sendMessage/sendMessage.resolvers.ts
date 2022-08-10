@@ -1,10 +1,12 @@
 import { Context } from "../../types/common/context";
 import { Resolvers } from "../../types/common/resolvers";
+import { SendMessageArgs } from "../../types/messages/resolverTypes";
+import { GenericResolverResults } from "../../types/users/resolverTypes";
 import { protectedResolver } from "../../users/users.utils";
 
 const resolvers : Resolvers = {
     Mutation: {
-        sendMessage: protectedResolver(async(_, { payload, roomId, userId }, { client, loggedInUser } : Context) => {
+        sendMessage: protectedResolver(async(_, { payload, roomId, userId } : SendMessageArgs, { client, loggedInUser } : Context) : Promise<GenericResolverResults> => {
             let room = null;
 
             if(userId){
