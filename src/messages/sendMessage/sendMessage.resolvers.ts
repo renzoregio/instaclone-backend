@@ -1,3 +1,5 @@
+import { NEW_MESSAGE } from "../../constants";
+import pubsub from "../../pubsub";
 import { Context } from "../../types/common/context";
 import { Resolvers } from "../../types/common/resolvers";
 import { SendMessageArgs } from "../../types/messages/resolverTypes";
@@ -40,7 +42,7 @@ const resolvers : Resolvers = {
                 }
             }
 
-            await client.message.create({ data: {
+            const message = await client.message.create({ data: {
                 payload,
                 room: {
                     connect: {
@@ -54,6 +56,7 @@ const resolvers : Resolvers = {
                 }
             }})
             
+            pubsub.publish(NEW_MESSAGE, { roomUpdates: message })
             return { ok: true }
         })
     }
