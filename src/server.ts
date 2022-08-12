@@ -7,7 +7,6 @@ import { client } from "./client";
 import { graphqlUploadExpress } from "graphql-upload";
 import { createServer } from "http"
 import { makeExecutableSchema } from '@graphql-tools/schema';
-
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
@@ -40,7 +39,7 @@ const startServer = async () => {
           throw new Error("Please login.")
         }
 
-        return { loggedInUser : user };
+        return { loggedInUser : user, client };
       }
     }, 
     wsServer);

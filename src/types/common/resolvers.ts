@@ -7,3 +7,11 @@ export type Resolvers = {
         [key: string]: (root: any, args: any, context: Context, info: any) => any;
     }
 }
+
+export type SubscriptionResolvers = {
+    "Subscription": {
+        [key : string]: {
+            "subscribe": any
+        }
+    }
+}
