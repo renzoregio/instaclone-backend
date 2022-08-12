@@ -34,7 +34,9 @@
 
 ## Direct Messages
 
-- [ ] See Room
+- [x] See Room
 - [x] See Rooms
-- [ ] Send Message (Create Room)
-- [ ] Realtime Messages
+- [x] Send Message (Create Room)
+- [x] Computed Fields
+- [x] See (Read) Messages
+- [x] Realtime Messages
