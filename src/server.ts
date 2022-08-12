@@ -26,13 +26,30 @@ const startServer = async () => {
     // Creating the WebSocket server
     const wsServer = new WebSocketServer({server: httpServer, path: "/graphql"})
     // WebSocketServer starts listening.
-    const serverCleanup = useServer({ schema }, wsServer);
+    const serverCleanup = useServer({ 
+      schema,
+      context: async (ctx) => {
+        const { connectionParams } = ctx;
+        if(!connectionParams.authorization){
+          throw new Error("Please login.")
+        }
+
+        const user = await getUser(connectionParams.authorization)
+
+        if(!user){
+          throw new Error("Please login.")
+        }
+
+        return { loggedInUser : user };
+      }
+    }, 
+    wsServer);
     
     const apollo = new ApolloServer({
         schema,
-        context: async ({ req }) => {
+        context: async ( ctx ) => {
           return {
-            loggedInUser: await getUser(req.headers.authorization),
+            loggedInUser: await getUser(ctx.req.headers.authorization),
             client
           }
         },

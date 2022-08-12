@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { withFilter } from "graphql-subscriptions";
 import { client } from "../../client";
 import { NEW_MESSAGE } from "../../constants";
@@ -8,17 +9,25 @@ const resolvers = {
     Subscription: {
         roomUpdates: {
             subscribe: async(root, args: { roomId: number }, context, info) => {
-                const ok = await client.room.findUnique({ where: { id: args.roomId }, select: { id: true }})
-
+                const loggedInUser: User = context.loggedInUser;
+                const ok = await client.room.findFirst({ where: { id: args.roomId, users: { some: { id: loggedInUser.id }} }, select: { id: true }})
                 if(!ok){
                     throw new Error("Room not found.")
                 }
 
                 return withFilter(
                     () => pubsub.asyncIterator(NEW_MESSAGE),
-                    (payload, variables) => {
+                    async (payload, variables, context: { loggedInUser: User }) => {
                         const { roomUpdates: { roomId }} = payload
-                        return roomId === variables.roomId;
+                        if(roomId === variables.roomId){
+                            const loggedInUser: User = context.loggedInUser;
+                            const room = await client.room.findFirst({ where: { id: roomId, users: { some: { id: loggedInUser.id }}}, select: { id: true }})
+                            if(room){
+                                return true
+                            }
+                        }
+
+                        return false
                     }
                 )(root, args, context, info);
 
