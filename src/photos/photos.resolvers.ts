@@ -22,6 +22,18 @@ const resolvers: Resolvers = {
         },
         isMyPhoto: ({ userId } : RootIsMyPhoto, _, { loggedInUser } : Context) : Boolean => {
             return loggedInUser && userId === loggedInUser.id
+        },
+        isLiked: async ({ id: photoId }, _, { loggedInUser, client } : Context) : Promise<Boolean> => {
+            if(!loggedInUser){
+                return false;
+            }
+
+            const ok = await client.like.findUnique({ where: { userId_photoId: {
+                userId: loggedInUser.id,
+                photoId
+            }}, select: { id: true }})
+
+            return ok ? true : false;
         }
     } ,
 

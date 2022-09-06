@@ -10,6 +10,7 @@ export default gql`
         likes: Int! 
         comments: Int!
         isMyPhoto: Boolean!
+        isLiked: Boolean!
         hashtags: [Hashtag]
         createdAt: String!
         updatedAt: String!
