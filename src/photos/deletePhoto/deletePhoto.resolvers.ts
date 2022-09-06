@@ -9,12 +9,12 @@ import { protectedResolver } from "../../users/users.utils";
         deletePhoto: protectedResolver(async(_, { id } : DeletePhotoArgs, { client, loggedInUser } : Context) : Promise<GenericResolverResults> => {
             const photo = await client.photo.findUnique({ where: { id }, select: { userId: true }})
 
-            if(!photo){
-                return { ok: false, error: "Photo not found." }
-            }
-
             if(photo.userId !== loggedInUser.id){
                 return { ok: false, error: "Not authorized."}
+            }
+            
+            if(!photo){
+                return { ok: false, error: "Photo not found." }
             }
 
             await client.photo.delete({ where: { id }})
