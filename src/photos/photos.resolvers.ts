@@ -1,4 +1,4 @@
-import { Hashtag, Photo, User } from "@prisma/client";
+import { Comment, Hashtag, Photo, User } from "@prisma/client";
 import { Resolvers } from "../types/common/resolvers";
 import { ArgsPhotos, RootPhotos } from "../types/hashtags/resolverTypes";
 import { RootComments, RootHashtags, RootIsMyPhoto, RootLikes, RootUser } from "../types/photos/resolverTypes";
@@ -17,8 +17,11 @@ const resolvers: Resolvers = {
         likes: async({ id } : RootLikes, _, { client } : Context) : Promise<number> => {
             return await client.like.count({ where: { photoId: id }})
         },
-        comments: async({ id } : RootComments, _, { client }: Context) : Promise<number> => {
+        commentCount: async({ id } : RootComments, _, { client }: Context) : Promise<number> => {
             return await client.comment.count({ where: { photoId: id }})
+        },
+        comments: async({ id }, _, { client } : Context) : Promise<Comment[]> => {
+            return await client.comment.findMany({ where: { photoId: id }, include: { user : true }})
         },
         isMyPhoto: ({ userId } : RootIsMyPhoto, _, { loggedInUser } : Context) : Boolean => {
             return loggedInUser && userId === loggedInUser.id
