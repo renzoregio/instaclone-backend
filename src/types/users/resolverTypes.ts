@@ -1,9 +1,10 @@
-import { User } from "@prisma/client";
+import { Comment, User } from "@prisma/client";
 import { FileUpload } from "graphql-upload";
 
 export interface GenericResolverResults {
     ok: boolean,
-    error?: string;
+    error?: string
+    id?: number
     
 }
 
@@ -111,4 +112,3 @@ export interface PhotosArgs {
 export interface SeeFeedArgs{
     lastId: number
 }
-
